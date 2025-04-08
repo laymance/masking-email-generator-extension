@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Email Generator Settings</title>
+    <link rel="stylesheet" href="styles/plugin.css">
+    <script src="scripts/options.js" defer></script>
+</head>
+<body class="email-masking-extension-wrapper optionsPage">
+    <div class="logoContainer">
+        <img src="icons/emailMaskerLogo.png" class="logo" />
+    </div>
+    <hr />
+    <h2>Domain</h2>
+    <input type="text" id="domainInput" placeholder="example.com">
+    <br><br>
+
+    <h2>Display Options</h2>
+    <label class="display-option-container">
+        <input type="checkbox" class="inputFieldIcon" name="inputFieldIcon" value="1">
+        Show icon in email input fields
+    </label>
+    <br><br>
+
+    <h2>Generation Options</h2>
+    <label class="option-container">
+        <input type="radio" class="optionSelector" name="optionSelector" value="1">
+        Domain + 5 character random string (e.g. google.com-x3uea@mydomain.com)
+    </label>
+    <label class="option-container">
+        <input type="radio" class="optionSelector" name="optionSelector" value="2">
+        Domain + random word (e.g. google.com-nova@mydomain.com)
+    </label>
+    <label class="option-container">
+        <input type="radio" class="optionSelector" name="optionSelector" value="3">
+        Domain + date (e.g. google.com-20250101@mydomain.com)
+    </label>
+    <label class="option-container">
+        <input type="radio" class="optionSelector" name="optionSelector" value="4">
+        15 character random string (e.g. lxypwwzn3mcqfadb@mydomain.com)
+    </label>
+    <label class="option-container">
+        <input type="radio" class="optionSelector" name="optionSelector" value="5">
+        Random words (e.g. crimson-silver-shadow@mydomain.com)
+    </label>
+    <br><br>
+
+    <h2>Setup</h2>
+    <p>This add-on works in conjunction with a domain that you own and that you have setup to have a catch-all email, meaning that sending to any address at your domain will forward it to specific email box. If your randomized email gets added to a spam list, then you can add a rule to automatically drop or junk that specific email address, and it protects your main email.</p>
+    <p>The benefit of using an add-on like this (with your own custom domain), instead of an email masking service, is that you maintain control of the email addresses and the domain. If you use a masking service you are locked in, when you leave their service then suddenly all of your emails you generated stop working and you lose access to accounts. There is no lock-in with this method.</p>
+    <br><br>
+
+    <h2>Email Generation History - last 250</h2>
+    <ul id="emailList"></ul>
+</body>
+</html>

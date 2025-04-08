@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/plugin.css">
+    <script src="scripts/popup.js" defer></script>
+</head>
+<body class="email-masking-extension-wrapper">
+    <div id="mainContent" class="bodyContainer">
+        <div class="logoContainer">
+            <img src="icons/emailMaskerLogo.png" class="logo" />
+        </div>
+        <hr />
+        <div class="optionsOuterContainer">
+            <label class="option-container">
+                <input type="radio" class="optionSelector" name="optionSelector" value="1" checked>
+                Domain + 5 character random string (e.g. google.com-x3uea@<span class="email-masking-extension-domain">mydomain.com</span>)
+            </label>
+            <label class="option-container">
+                <input type="radio" class="optionSelector" name="optionSelector" value="2">
+                Domain + random word (e.g. google.com-nova@<span class="email-masking-extension-domain">mydomain.com</span>)
+            </label>
+            <label class="option-container">
+                <input type="radio" class="optionSelector" name="optionSelector" value="3">
+                Domain + date (e.g. google.com-20250101@<span class="email-masking-extension-domain">mydomain.com</span>)
+            </label>
+            <label class="option-container">
+                <input type="radio" class="optionSelector" name="optionSelector" value="4">
+                15 character random string (e.g. lxypwwzn3mcqfadb@<span class="email-masking-extension-domain">mydomain.com</span>)
+            </label>
+            <label class="option-container">
+                <input type="radio" class="optionSelector" name="optionSelector" value="5">
+                Random words (e.g. crimson-silver-shadow@<span class="email-masking-extension-domain">mydomain.com</span>)
+            </label>
+            <button id="generateEmail">Generate Email</button>
+        </div>
+    </div>
+    <div id="emailDisplay" class="bodyContainer" style="display: none; text-align: center;">
+        <div class="logoContainer">
+            <img src="icons/emailMaskerLogo.png" class="logo" />
+        </div>
+        <hr />
+        <br><br>
+        <p id="generatedEmailDisplay"></p>
+        <button id="copyToClipboard" title="Copy to Clipboard">📋 Copy to Clipboard</button>
+    </div>
+    <div id="notConfigured" class="bodyContainer" style="display: none; text-align: center;">
+        <div class="logoContainer">
+            <img src="icons/emailMaskerLogo.png" class="logo" />
+        </div>
+        <hr />
+        <br><br>
+        <p>The extension must be configured first, please visit the <a href="#" id="extensionPreferencesLink">extension preferences</a> and set your domain name.</p>
+    </div>
+</body>
+</html>

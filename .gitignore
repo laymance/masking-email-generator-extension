@@ -1,0 +1,9 @@
+# OS Related
+.DS_Store
+
+# IDE Related
+.idea
+.vscode
+
+# Backup files
+manifest.json.bak

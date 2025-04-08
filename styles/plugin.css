@@ -1,0 +1,166 @@
+/** Styles for the in input field icon **/
+img.email-masking-extension-icon {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+img.email-masking-extension-icon.email-masking-extension-icon-visible {
+    display: block !important;
+    opacity: 1;
+}
+
+input.email-masking-extension-icon-input-visible {
+    padding-right: 30px;
+}
+
+
+/**
+ ** Styles for the Pop-up and Options Pages
+ ** Scoped to keep from having collisions with the user's page
+**/
+
+body.email-masking-extension-wrapper {
+    background-color: #333;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    font-size: 13px;
+}
+
+body.email-masking-extension-wrapper .bodyContainer {
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 600px;
+    height: 280px;
+}
+
+body.email-masking-extension-wrapper .bodyContainer.result {
+    padding-top: 50px;
+}
+
+body.email-masking-extension-wrapper .logoContainer {
+    display: block;
+    text-align: center;
+    padding-top: 15px;
+}
+
+body.email-masking-extension-wrapper .optionsOuterContainer {
+    display: block;
+    padding: 10px 15px;
+}
+
+body.email-masking-extension-wrapper .logo {
+    width: 55px;
+    height: 55px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.email-masking-extension-wrapper hr {
+    margin: 5px 0;
+}
+
+body.email-masking-extension-wrapper .option-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+body.email-masking-extension-wrapper .option-container input {
+    margin-right: 8px;
+}
+
+body.email-masking-extension-wrapper label {
+    font-size: 13px;
+}
+
+body.email-masking-extension-wrapper button#generateEmail,
+body.email-masking-extension-wrapper button#copyToClipboard {
+    border: 1px solid #fff;
+    text-align: center;
+    padding: 10px 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12px;
+    display: block;
+    background-color: #008CBA;
+    color: #fff;
+}
+
+body.email-masking-extension-wrapper button#generateEmail:hover,
+body.email-masking-extension-wrapper button#copyToClipboard:hover {
+    /*background-color: #007095;*/
+    background-color: #005B79;
+    cursor: pointer;
+}
+
+body.email-masking-extension-wrapper #generatedEmailDisplay {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+body.email-masking-extension-wrapper #generatedEmailDisplay.copied-flash {
+    background-color: #008CBA; /* Flash color */
+    color: white; /* Make text readable during the flash */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+body.email-masking-extension-wrapper ul#emailList {
+    margin: 0 10px 10px 10px;
+    border: 2px solid #ccc;
+    width: 98%;
+    height: 300px;
+    overflow: auto;
+    padding: 5px;
+    list-style: none;
+}
+
+body.email-masking-extension-wrapper.optionsPage {
+    background-color: #fff;
+    color: #000;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+}
+
+body.email-masking-extension-wrapper.optionsPage input#domainInput {
+    width: 250px;
+    margin-bottom: 10px;
+}
+
+body.email-masking-extension-wrapper.optionsPage h2,
+body.email-masking-extension-wrapper.optionsPage h3 {
+    margin-bottom: 5px;
+}
+
+body.email-masking-extension-wrapper.optionsPage p {
+    margin-top: 0;
+}
+
+body.email-masking-extension-wrapper .bodyContainer p {
+    padding: 0 12px;
+}
+
+body.email-masking-extension-wrapper .bodyContainer a,
+body.email-masking-extension-wrapper .bodyContainer a:visited {
+    text-decoration: underline;
+    color: #fff;
+}
+
+body.email-masking-extension-wrapper span.email-masking-extension-domain {
+    display: inline-block;
+}
