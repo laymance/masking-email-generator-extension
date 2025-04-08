@@ -1,4 +1,4 @@
-<div style="text-align: center;"><img src="icons/emailMaskerLogo.png" height="130"></div>
+<p align="center"><img src="icons/emailMaskerLogo.png" height="130"></p>
 
 # Masking Email Generator Browser Extension
 
