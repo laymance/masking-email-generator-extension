@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Masking Email Generator",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "short_name": "Random email masking generator for custom domains.",
   "description": "This add-on allows users to generate random email addresses for a catch-all domain that they own on registration and login forms. This is useful for email masking and preventing spam. Custom domain should be set in the add-on preferences.",
   "icons": {
