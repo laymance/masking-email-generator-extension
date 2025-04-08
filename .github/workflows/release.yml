@@ -10,20 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Extract version from manifest.json
       - name: Extract Version from manifest.json
         id: extract_version
         run: |
-          # Extract "version" field from manifest.json
           VERSION=$(grep -Po '"version": "\K[0-9]+\.[0-9]+\.[0-9]+' manifest.json)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Extracted version: $VERSION"
 
+      # Step 3: Validate tag matches version
       - name: Validate Tag Matches Version
         run: |
-          # Ensure the pushed tag matches the version in manifest.json
           TAG_NAME=${GITHUB_REF##*/} # Get tag name from GITHUB_REF (e.g., "refs/tags/v1.2.3")
           VERSION_FROM_MANIFEST="v${VERSION}"
           if [ "$TAG_NAME" != "$VERSION_FROM_MANIFEST" ]; then
@@ -32,35 +33,28 @@ jobs:
           fi
           echo "Tag ($TAG_NAME) matches manifest.json version ($VERSION_FROM_MANIFEST)."
 
-      - name: Extract Changelog for Release
-        id: changelog
-        run: |
-          # Extract changelog notes for the given version
-          TAG_NAME=${GITHUB_REF##*/} # Get tag name from GITHUB_REF
-          VERSION=${TAG_NAME#v} # Remove the "v" prefix from the tag to get plain version
-          
-          # Extract relevant section from CHANGELOG.md
-          CHANGELOG=$(awk "/## \\[${VERSION}\\]/ {flag=1; next} /^## / {flag=0} flag {print}" CHANGELOG.md | sed '/^[[:space:]]*$/d')
-          
-          # If no changelog entry is found, fail the workflow
-          if [ -z "$CHANGELOG" ]; then
-            echo "Error: No changelog entry found in CHANGELOG.md for version ${TAG_NAME}."
-            exit 1
-          fi
-          
-          # Escape the changelog content for safe storage in an environment variable
-          SANITIZED_CHANGELOG="${CHANGELOG//'%'/'%25'}" # Escape '%'
-          SANITIZED_CHANGELOG="${SANITIZED_CHANGELOG//$'\n'/'%0A'}" # Escape newlines
-          SANITIZED_CHANGELOG="${SANITIZED_CHANGELOG//$'\r'/'%0D'}" # Escape carriage returns
-          
-          # Save sanitized changelog as output
-          echo "changelog=$SANITIZED_CHANGELOG" >> $GITHUB_ENV
-          echo "Extracted and sanitized changelog successfully!"
+      # Step 4: Install Node.js and npm
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Adjust the Node.js version as per your project's requirements
 
+      # Step 5: Install npm dependencies
+      - name: Install npm dependencies
+        run: npm install -g web-ext
+
+      # Step 6: Run web-ext build step
+      - name: Build the web extension
+        run: |
+          mkdir -p web-ext-artifacts
+          web-ext build --artifacts-dir=web-ext-artifacts --overwrite-dest
+        env:
+          NODE_ENV: production # Set environment to production if needed
+
+      # Step 7: Check that the build artifact exists
       - name: Verify Build Artifact Exists
         id: check_artifact
         run: |
-          # Verify that the built zip file exists
           ZIP_FILE="web-ext-artifacts/masking_email_generator-${VERSION}.zip"
           if [ ! -f "$ZIP_FILE" ]; then
             echo "Error: Build artifact $ZIP_FILE not found."
@@ -69,6 +63,30 @@ jobs:
           echo "ZIP_FILE=$ZIP_FILE" >> $GITHUB_ENV
           echo "Build artifact $ZIP_FILE is present."
 
+      # Step 8: Extract changelog for release
+      - name: Extract Changelog for Release
+        id: changelog
+        run: |
+          TAG_NAME=${GITHUB_REF##*/} # Get tag name from GITHUB_REF
+          VERSION=${TAG_NAME#v} # Remove the "v" prefix from the tag to get plain version
+          
+          # Extract relevant section from CHANGELOG.md
+          CHANGELOG=$(awk "/## \\[${VERSION}\\]/ {flag=1; next} /^## / {flag=0} flag {print}" CHANGELOG.md | sed '/^[[:space:]]*$/d')
+          
+          if [ -z "$CHANGELOG" ]; then
+            echo "Error: No changelog entry found in CHANGELOG.md for version ${VERSION}."
+            exit 1
+          fi
+          
+          # Escape changelog content for safe storage in an environment variable
+          SANITIZED_CHANGELOG="${CHANGELOG//'%'/'%25'}" # Escape '%'
+          SANITIZED_CHANGELOG="${SANITIZED_CHANGELOG//$'\n'/'%0A'}" # Escape newlines
+          SANITIZED_CHANGELOG="${SANITIZED_CHANGELOG//$'\r'/'%0D'}" # Escape carriage returns
+          
+          echo "changelog=$SANITIZED_CHANGELOG" >> $GITHUB_ENV
+          echo "Extracted and sanitized changelog."
+
+      # Step 9: Create GitHub Release
       - name: Create GitHub Release
         uses: actions/create-release@v1
         id: create_release
@@ -78,13 +96,16 @@ jobs:
           body: ${{ env.changelog }}
           draft: false
           prerelease: false
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Step 10: Upload release artifact
       - name: Upload Release Artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.ZIP_FILE }} # The prebuilt zip file
+          asset_path: ${{ env.ZIP_FILE }}
           asset_name: masking_email_generator-${{ env.VERSION }}.zip
           asset_content_type: application/zip
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
