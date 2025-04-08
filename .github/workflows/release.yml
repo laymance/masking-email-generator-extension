@@ -78,13 +78,11 @@ jobs:
             exit 1
           fi
           
-          # Escape changelog content for safe storage in an environment variable
-          SANITIZED_CHANGELOG="${CHANGELOG//'%'/'%25'}" # Escape '%'
-          SANITIZED_CHANGELOG="${SANITIZED_CHANGELOG//$'\n'/'%0A'}" # Escape newlines
-          SANITIZED_CHANGELOG="${SANITIZED_CHANGELOG//$'\r'/'%0D'}" # Escape carriage returns
-          
-          echo "changelog=$SANITIZED_CHANGELOG" >> $GITHUB_ENV
-          echo "Extracted and sanitized changelog."
+          # Save plain-text changelog (no sanitization)
+          echo "changelog<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "Extracted changelog successfully!"
 
       # Step 9: Create GitHub Release
       - name: Create GitHub Release
