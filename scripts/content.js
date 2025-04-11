@@ -11,7 +11,7 @@ function injectIcon(input) {
     wrapper.appendChild(input);
 
     const icon = document.createElement("img");
-    icon.src = chrome.runtime.getURL("icons/emailMaskerLogo.png");
+    icon.src = chrome.runtime.getURL("icons/icon-128.png");
     icon.classList = "email-masking-extension-icon";
     icon.style.display = "none";
 
