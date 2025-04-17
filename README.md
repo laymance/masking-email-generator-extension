@@ -3,7 +3,7 @@
 # Masking Email Generator Browser Extension
 
 > [!NOTE]
-> This extension has been submitted to the Firefox Add-on directory and is currently pending review; a link to the official add-on will be added here once it passes review.
+> This extension is now listed on the Firefox Add-On site, you can install it by viewing the [extension addon page](https://addons.mozilla.org/en-US/firefox/addon/masking-email-generator/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search).
 
 The **Masking Email Generator** browser add-on is a powerful tool that allows users to generate random, unique email addresses for use with their custom catch-all domains. Whether you're signing up on registration forms or logging into platforms, this add-on ensures your primary email address remains private while protecting you from spam.
 
